@@ -98,7 +98,9 @@ function CrmDashboard() {
         r.agente.toLowerCase().includes(q) ||
         r.telefono.includes(q) ||
         r.documento.includes(q) ||
-        r.producto.toLowerCase().includes(q)
+        r.producto.toLowerCase().includes(q) ||
+        r.region.toLowerCase().includes(q) ||
+        r.campania.toLowerCase().includes(q)
       );
     });
   }, [busqueda, campania, canal, estado, equipo, region, rango]);
