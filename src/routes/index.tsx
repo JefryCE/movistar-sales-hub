@@ -1,10 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect, useMemo, useState } from "react";
 import {
   BadgeCheck,
   Download,
   Filter,
   Headphones,
+  LogOut,
   PhoneCall,
   Search,
   Target,
@@ -15,6 +16,7 @@ import {
 
 import { KpiCard } from "@/components/crm/kpi-card";
 import { CanalChart, EstadoChart, Panel, RankingChart, TendenciaChart } from "@/components/crm/graficos";
+import { useSesion } from "@/lib/auth";
 import { exportarExcel } from "@/lib/exportar-excel";
 import {
   CAMPANIAS,
@@ -69,6 +71,11 @@ const badgeEstado: Record<string, string> = {
 };
 
 function CrmDashboard() {
+  const navigate = useNavigate();
+  const { usuario, cargando, salir } = useSesion();
+  useEffect(() => {
+    if (!cargando && !usuario) navigate({ to: "/login" });
+  }, [cargando, usuario, navigate]);
   const [busqueda, setBusqueda] = useState("");
   const [campania, setCampania] = useState(TODOS);
   const [canal, setCanal] = useState(TODOS);
@@ -145,6 +152,8 @@ function CrmDashboard() {
     });
   }
 
+  if (cargando || !usuario) return null;
+
   return (
     <div className="min-h-screen bg-background">
       <header className="bg-gradient-movistar text-navy-foreground">
@@ -169,6 +178,21 @@ function CrmDashboard() {
               <Button onClick={descargar} className="gap-2 bg-navy-foreground text-navy hover:bg-navy-foreground/90">
                 <Download className="size-4" />
                 Descargar Excel
+              </Button>
+              <div className="hidden text-right md:block">
+                <p className="text-sm font-semibold">{usuario.nombre}</p>
+                <p className="text-xs text-navy-foreground/70">{usuario.rol}</p>
+              </div>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  salir();
+                  navigate({ to: "/login" });
+                }}
+                className="gap-2 bg-navy-foreground/10 text-navy-foreground hover:bg-navy-foreground/20 hover:text-navy-foreground"
+              >
+                <LogOut className="size-4" />
+                Salir
               </Button>
             </div>
           </div>
