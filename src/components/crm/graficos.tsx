@@ -69,10 +69,11 @@ export function TendenciaChart({ data }: { data: { periodo: string; ventas: numb
         </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" vertical={false} />
         <XAxis dataKey="periodo" tickLine={false} axisLine={false} fontSize={11} stroke="var(--color-muted-foreground)" />
-        <YAxis tickLine={false} axisLine={false} fontSize={11} stroke="var(--color-muted-foreground)" />
+        <YAxis yAxisId="v" tickLine={false} axisLine={false} fontSize={11} stroke="var(--color-muted-foreground)" />
+        <YAxis yAxisId="i" orientation="right" tickLine={false} axisLine={false} fontSize={11} stroke="var(--color-muted-foreground)" />
         <Tooltip contentStyle={tooltipStyle} />
-        <Area type="monotone" dataKey="ventas" name="Ventas" stroke={AZUL} strokeWidth={2.5} fill="url(#gradVentas)" />
-        <Area type="monotone" dataKey="ingresos" name="Ingresos (S/ x10)" stroke={VERDE} strokeWidth={2} fillOpacity={0} />
+        <Area yAxisId="v" type="monotone" dataKey="ventas" name="Ventas" stroke={AZUL} strokeWidth={2.5} fill="url(#gradVentas)" />
+        <Area yAxisId="i" type="monotone" dataKey="ingresos" name="Ingresos (S/ x10)" stroke={VERDE} strokeWidth={2} fillOpacity={0} />
         <Legend iconType="circle" wrapperStyle={{ fontSize: 11 }} />
       </AreaChart>
     </ResponsiveContainer>
