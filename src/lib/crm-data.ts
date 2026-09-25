@@ -81,7 +81,7 @@ export const REGIONES = ["Lima", "Arequipa", "Trujillo", "Cusco", "Piura", "Chic
 const ESTADOS: EstadoVenta[] = ["Ganada", "En gestión", "Pendiente", "Perdida"];
 
 function pick<T>(rnd: () => number, arr: T[]): T {
-  return arr[Math.floor(rnd() * arr.length)];
+  return arr[Math.floor(rnd() * arr.length)] as T;
 }
 
 function generar(): Registro[] {
